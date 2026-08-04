@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: car-live-monitor-api
+Version: 0.1.0
+Summary: Realtime API for the internal car live monitoring pilot
+Requires-Python: >=3.11
+Requires-Dist: fastapi<1,>=0.115
+Requires-Dist: pydantic-settings<3,>=2.7
+Requires-Dist: uvicorn[standard]<1,>=0.34
+Provides-Extra: dev
+Requires-Dist: httpx<1,>=0.28; extra == "dev"
+Requires-Dist: pytest<9,>=8.3; extra == "dev"
+Requires-Dist: ruff<1,>=0.9; extra == "dev"

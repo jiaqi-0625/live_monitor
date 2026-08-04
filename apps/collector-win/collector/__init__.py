@@ -1,0 +1,2 @@
+"""Windows audio collector."""
+
