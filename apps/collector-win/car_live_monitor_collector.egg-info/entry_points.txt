@@ -1,2 +1,0 @@
-[console_scripts]
-car-live-collector = collector.app:main

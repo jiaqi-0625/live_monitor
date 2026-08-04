@@ -1,8 +1,0 @@
-Metadata-Version: 2.4
-Name: car-live-monitor-collector
-Version: 0.1.0
-Summary: Windows system audio collector for the internal live monitor
-Requires-Python: >=3.11
-Requires-Dist: numpy<3,>=2.1
-Requires-Dist: soundcard<1,>=0.4.4
-Requires-Dist: websocket-client<2,>=1.8

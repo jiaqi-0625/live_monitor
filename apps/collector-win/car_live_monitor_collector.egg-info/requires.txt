@@ -1,3 +1,0 @@
-numpy<3,>=2.1
-soundcard<1,>=0.4.4
-websocket-client<2,>=1.8
