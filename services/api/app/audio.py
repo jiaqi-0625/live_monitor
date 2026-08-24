@@ -1,5 +1,47 @@
 import wave
+from array import array
 from pathlib import Path
+from sys import byteorder
+
+
+class Pcm16SignalMonitor:
+    """Detect a connected PCM16 stream that contains only silence."""
+
+    def __init__(
+        self,
+        sample_rate: int = 16000,
+        silence_seconds: float = 8,
+        amplitude_threshold: int = 8,
+    ) -> None:
+        self.silent_byte_limit = int(sample_rate * 2 * silence_seconds)
+        self.amplitude_threshold = amplitude_threshold
+        self.silent_bytes = 0
+        self.warning_active = False
+
+    def observe(self, chunk: bytes) -> str | None:
+        if not chunk:
+            return None
+        usable = chunk[: len(chunk) - (len(chunk) % 2)]
+        samples = array("h")
+        samples.frombytes(usable)
+        if byteorder != "little":
+            samples.byteswap()
+        audible = any(abs(sample) > self.amplitude_threshold for sample in samples)
+        if audible:
+            self.silent_bytes = 0
+            if self.warning_active:
+                self.warning_active = False
+                return "resumed"
+            return None
+
+        self.silent_bytes += len(usable)
+        if (
+            not self.warning_active
+            and self.silent_bytes >= self.silent_byte_limit
+        ):
+            self.warning_active = True
+            return "silent"
+        return None
 
 
 class WavRecorder:
@@ -26,4 +68,3 @@ class WavRecorder:
         if self._wave:
             self._wave.close()
             self._wave = None
-

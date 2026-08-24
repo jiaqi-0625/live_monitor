@@ -28,6 +28,10 @@ storage/
 *.sqlite
 *.sqlite3
 logs/
+credentials/
+key.md
+tmp/
+apps/browser-extension.rar
 
 # Editors and OS
 .idea/

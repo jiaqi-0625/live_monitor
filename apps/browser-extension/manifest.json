@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "汽车直播盯播助手",
+  "description": "采集当前直播标签页音频和懂车云店大屏指标，发送到内部盯播平台。",
+  "version": "0.2.2",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "activeTab",
+    "offscreen",
+    "scripting",
+    "storage",
+    "tabCapture"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "汽车直播盯播助手"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.autoengine.com/jdc/industry/live/screen*"
+      ],
+      "js": [
+        "bridge-main.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://www.autoengine.com/jdc/industry/live/screen*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src http://*:* https://*:* ws://*:* wss://*:*"
+  }
+}

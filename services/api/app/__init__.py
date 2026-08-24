@@ -1,2 +1,1 @@
 """Car live monitor API."""
-

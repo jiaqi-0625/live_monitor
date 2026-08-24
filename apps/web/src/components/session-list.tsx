@@ -40,7 +40,7 @@ export function SessionList({
         {[0, 1, 2].map((item) => (
           <div
             key={item}
-            className="h-20 animate-pulse rounded-lg bg-sidebar-accent"
+            className="h-20 animate-pulse rounded-xl bg-sidebar-accent"
           />
         ))}
       </div>
@@ -49,7 +49,7 @@ export function SessionList({
 
   if (sessions.length === 0) {
     return (
-      <div className="mx-3 rounded-lg border border-white/10 px-3 py-6 text-center">
+      <div className="mx-3 rounded-xl border border-sidebar-border bg-sidebar-accent/35 px-3 py-6 text-center">
         <RadioTower className="mx-auto mb-2 size-5 text-sidebar-muted" />
         <p className="text-sm font-medium">暂无场次</p>
         <p className="mt-1 text-xs text-sidebar-muted">
@@ -60,7 +60,7 @@ export function SessionList({
   }
 
   return (
-    <div className="grid gap-1 px-2">
+    <div className="grid gap-1.5 px-2">
       {sessions.map((session) => {
         const config = statusConfig[session.status]
         return (
@@ -69,8 +69,8 @@ export function SessionList({
             type="button"
             onClick={() => onSelect(session.id)}
             className={cn(
-              "grid w-full gap-2 rounded-lg px-3 py-3 text-left text-sidebar-foreground outline-none transition-colors hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-ring",
-              activeId === session.id && "bg-sidebar-accent",
+              "group relative grid w-full gap-2 overflow-hidden rounded-xl px-3 py-3 text-left text-sidebar-foreground outline-none transition-colors before:absolute before:bottom-3 before:left-0 before:top-3 before:w-0.5 before:rounded-full before:bg-primary before:opacity-0 hover:bg-sidebar-accent/75 focus-visible:ring-2 focus-visible:ring-ring",
+              activeId === session.id && "bg-sidebar-accent before:opacity-100 ring-1 ring-inset ring-sidebar-border",
             )}
           >
             <div className="flex items-center justify-between gap-2">

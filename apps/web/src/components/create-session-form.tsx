@@ -26,6 +26,7 @@ export function CreateSessionForm({
 }: CreateSessionFormProps) {
   const [title, setTitle] = useState("")
   const [roomName, setRoomName] = useState("")
+  const [liveUrl, setLiveUrl] = useState("")
   const [platform, setPlatform] = useState<Platform>("douyin")
 
   async function handleSubmit(event: FormEvent) {
@@ -33,19 +34,21 @@ export function CreateSessionForm({
     await onCreate({
       title: title.trim(),
       room_name: roomName.trim(),
+      live_url: liveUrl.trim(),
       operator_name: operatorName.trim() || "内部优化师",
       platform,
     })
     setTitle("")
     setRoomName("")
+    setLiveUrl("")
   }
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="bg-card/80">
+      <CardHeader className="border-b border-border/60">
         <CardTitle>新建监控场次</CardTitle>
         <CardDescription>
-          创建后，在Windows采集助手中输入场次ID并开始采集。
+          创建后，在直播标签页的浏览器扩展中输入场次ID并开始采集。
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -70,7 +73,7 @@ export function CreateSessionForm({
               ].map(([value, label]) => (
                 <label
                   key={value}
-                  className="flex cursor-pointer items-center gap-2 rounded-md border bg-background px-3 py-2 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary/5"
+                  className="flex cursor-pointer items-center gap-2 rounded-lg border border-input bg-card px-3 py-2.5 text-sm transition-colors hover:bg-muted/60 has-[:checked]:border-primary/60 has-[:checked]:bg-primary/7 has-[:checked]:ring-2 has-[:checked]:ring-primary/10"
                 >
                   <input
                     type="radio"
@@ -85,6 +88,24 @@ export function CreateSessionForm({
               ))}
             </div>
           </fieldset>
+
+          <div className="grid gap-2">
+            <Label htmlFor="live-url">直播间链接</Label>
+            <Input
+              id="live-url"
+              type="url"
+              value={liveUrl}
+              onChange={(event) => setLiveUrl(event.target.value)}
+              placeholder={
+                platform === "douyin"
+                  ? "https://live.douyin.com/..."
+                  : "https://www.autoengine.com/jdc/industry/live/screen?room_id=..."
+              }
+            />
+            <p className="text-xs leading-5 text-muted-foreground">
+              选填。浏览器扩展会采集标签页声音，并同步懂车云店大屏指标。
+            </p>
+          </div>
 
           <div className="grid gap-2">
             <Label htmlFor="room-name">直播间备注</Label>

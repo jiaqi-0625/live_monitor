@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>汽车直播盯播助手</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="logo">声</div>
+        <div>
+          <h1>汽车直播盯播助手</h1>
+          <p>标签页音频 · 大屏数据</p>
+        </div>
+      </header>
+
+      <section class="status-card" aria-live="polite">
+        <div class="status-line">
+          <span id="status-dot" class="status-dot"></span>
+          <strong id="status-text">等待开始</strong>
+          <span id="capture-count" class="capture-count">正在采集 0/3 间</span>
+        </div>
+        <p id="tab-title">尚未选择直播标签页</p>
+        <div class="level-track" aria-label="实时音量">
+          <div id="level-bar" class="level-bar"></div>
+        </div>
+        <p id="metric-status" class="metric-status">监控数据：等待抓取</p>
+      </section>
+
+      <section class="capture-list-card" aria-labelledby="capture-list-title">
+        <strong id="capture-list-title">并发采集任务</strong>
+        <ul id="capture-list">
+          <li class="empty-capture">暂无正在采集的直播间</li>
+        </ul>
+      </section>
+
+      <form id="capture-form">
+        <label for="server-url">服务器地址</label>
+        <input
+          id="server-url"
+          type="url"
+          value="http://124.220.147.243"
+          required
+        />
+
+        <label for="session-id">场次ID或直播链接</label>
+        <input
+          id="session-id"
+          type="text"
+          placeholder="粘贴场次ID，或懂车云店直播链接"
+          title="支持工作台场次ID，也支持懂车云店完整直播链接"
+          required
+        />
+
+        <div class="actions">
+          <button id="start-button" type="submit">采集当前标签页</button>
+          <button id="stop-button" type="button" class="secondary" disabled>
+            停止
+          </button>
+        </div>
+      </form>
+
+      <p id="error-text" class="error" role="alert"></p>
+      <footer>
+        不读取Cookie。每个直播标签页可独立开始或停止，最多同时采集3间。
+      </footer>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -31,4 +31,3 @@ class MonitorHub:
                 stale.append(websocket)
         for websocket in stale:
             await self.disconnect(session_id, websocket)
-

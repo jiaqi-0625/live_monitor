@@ -1,0 +1,39 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    env_file:
+      - services/api/.env
+    environment:
+      APP_ENV: production
+      DATABASE_PATH: /data/live-monitor.db
+      STORAGE_ROOT: /data
+      WEB_ORIGINS: http://124.220.147.243
+      LLM_API_KEY: ${DEEPSEEK_API_KEY:-}
+      LLM_MODEL: ${DEEPSEEK_MODEL:-deepseek-chat}
+      APP_CONFIG_ENCRYPTION_KEY: ${APP_CONFIG_ENCRYPTION_KEY:-}
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3)"
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "${WEB_BIND_PORT:-80}:80"
+    restart: unless-stopped

@@ -33,4 +33,3 @@ class MockAsrProvider(AsrProvider):
 
     async def close(self) -> None:
         return None
-
